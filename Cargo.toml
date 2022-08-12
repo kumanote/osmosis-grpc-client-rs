@@ -7,7 +7,7 @@ edition = "2021"
 description = "Rust implementation of cosmos osmosisd GRPC client."
 repository = "https://github.com/kumanote/osmosis-grpc-client-rs"
 readme = "README.md"
-keywords = ["cosmos", "gaia", "grpc client", "grpc"]
+keywords = ["cosmos", "osmosis", "osmosisd", "grpc client", "grpc"]
 build = "build.rs"
 
 [dependencies]
