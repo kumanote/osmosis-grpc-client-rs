@@ -1,0 +1,38 @@
+[package]
+name = "osmosis-grpc-client"
+version = "11.0.0"
+authors = ["Hiroki Tanaka <support@kumano-te.com>"]
+license = "MIT"
+edition = "2021"
+description = "Rust implementation of cosmos osmosisd GRPC client."
+repository = "https://github.com/kumanote/osmosis-grpc-client-rs"
+readme = "README.md"
+keywords = ["cosmos", "gaia", "grpc client", "grpc"]
+build = "build.rs"
+
+[dependencies]
+bytes = "1.1.0"
+dotenv = "0.15.0"
+
+[dependencies.futures]
+version = "0.3"
+
+[dependencies.tokio]
+version = "1.12"
+features = ["full"]
+
+[dependencies.subtle-encoding]
+version = "0.5"
+
+[dependencies.prost]
+version = "0.8"
+
+[dependencies.prost-types]
+version = "0.8"
+
+[dependencies.tonic]
+version = "0.5.2"
+features = ["tls", "compression"]
+
+[build-dependencies]
+tonic-build = "0.5.2"
