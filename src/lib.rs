@@ -238,6 +238,68 @@ pub mod ics23 {
     include!("prost/ics23.rs");
 }
 
+pub mod osmosis {
+    pub mod epochs {
+        pub mod v1beta1 {
+            include!("prost/osmosis.epochs.v1beta1.rs");
+        }
+    }
+    pub mod gamm {
+        pub mod poolmodels {
+            pub mod balancer {
+                pub mod v1beta1 {
+                    include!("prost/osmosis.gamm.poolmodels.balancer.v1beta1.rs");
+                }
+            }
+            pub mod stableswap {
+                pub mod v1beta1 {
+                    include!("prost/osmosis.gamm.poolmodels.stableswap.v1beta1.rs");
+                }
+            }
+        }
+        pub mod v1beta1 {
+            include!("prost/osmosis.gamm.v1beta1.rs");
+        }
+    }
+    pub mod incentives {
+        include!("prost/osmosis.incentives.rs");
+    }
+    pub mod lockup {
+        include!("prost/osmosis.lockup.rs");
+    }
+    pub mod mint {
+        pub mod v1beta1 {
+            include!("prost/osmosis.mint.v1beta1.rs");
+        }
+    }
+    pub mod poolincentives {
+        pub mod v1beta1 {
+            include!("prost/osmosis.poolincentives.v1beta1.rs");
+        }
+    }
+    pub mod store {
+        pub mod v1beta1 {
+            include!("prost/osmosis.store.v1beta1.rs");
+        }
+    }
+    pub mod superfluid {
+        include!("prost/osmosis.superfluid.rs");
+        pub mod v1beta1 {
+            include!("prost/osmosis.superfluid.v1beta1.rs");
+        }
+    }
+    pub mod tokenfactory {
+        pub mod v1beta1 {
+            include!("prost/osmosis.tokenfactory.v1beta1.rs");
+        }
+    }
+    pub mod txfees {
+        pub mod v1beta1 {
+            include!("prost/osmosis.txfees.v1beta1.rs");
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
