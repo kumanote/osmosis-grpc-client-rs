@@ -3,9 +3,9 @@ pub mod tonic {
 }
 
 pub mod prost {
-    pub use prost::Message;
+    pub use prost::*;
     pub mod types {
-        pub use prost_types::{Any, Timestamp};
+        pub use prost_types::*;
     }
 }
 
