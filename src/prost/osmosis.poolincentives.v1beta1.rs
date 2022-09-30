@@ -26,6 +26,20 @@ pub struct DistrRecord {
     #[prost(string, tag = "2")]
     pub weight: ::prost::alloc::string::String,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PoolToGauge {
+    #[prost(uint64, tag = "1")]
+    pub pool_id: u64,
+    #[prost(uint64, tag = "2")]
+    pub gauge_id: u64,
+    #[prost(message, optional, tag = "3")]
+    pub duration: ::core::option::Option<::prost_types::Duration>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PoolToGauges {
+    #[prost(message, repeated, tag = "2")]
+    pub pool_to_gauge: ::prost::alloc::vec::Vec<PoolToGauge>,
+}
 /// ReplacePoolIncentivesProposal is a gov Content type for updating the pool
 /// incentives. If a ReplacePoolIncentivesProposal passes, the proposal’s records
 /// override the existing DistrRecords set in the module. Each record has a
@@ -85,6 +99,8 @@ pub mod query_gauge_ids_response {
         pub gauge_id: u64,
         #[prost(message, optional, tag = "2")]
         pub duration: ::core::option::Option<::prost_types::Duration>,
+        #[prost(string, tag = "3")]
+        pub gauge_incentive_percentage: ::prost::alloc::string::String,
     }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -208,6 +224,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " DistrInfo returns the pool's matching gauge ids and weights."]
         pub async fn distr_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDistrInfoRequest>,
@@ -224,6 +241,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " Params returns pool incentives params."]
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
@@ -240,6 +258,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " LockableDurations returns lock durations for pools."]
         pub async fn lockable_durations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryLockableDurationsRequest>,
@@ -256,6 +275,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " IncentivizedPools returns currently incentivized pools"]
         pub async fn incentivized_pools(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryIncentivizedPoolsRequest>,
@@ -272,6 +292,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " ExternalIncentiveGauges returns external incentive gauges."]
         pub async fn external_incentive_gauges(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryExternalIncentiveGaugesRequest>,
@@ -301,4 +322,6 @@ pub struct GenesisState {
     pub lockable_durations: ::prost::alloc::vec::Vec<::prost_types::Duration>,
     #[prost(message, optional, tag = "3")]
     pub distr_info: ::core::option::Option<DistrInfo>,
+    #[prost(message, optional, tag = "4")]
+    pub pool_to_gauges: ::core::option::Option<PoolToGauges>,
 }

@@ -208,6 +208,8 @@ pub struct MsgChannelOpenInit {
 pub struct MsgChannelOpenInitResponse {
     #[prost(string, tag = "1")]
     pub channel_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub version: ::prost::alloc::string::String,
 }
 /// MsgChannelOpenInit defines a msg sent by a Relayer to try to open a channel
 /// on Chain B. The version field within the Channel field has been deprecated. Its
@@ -234,7 +236,10 @@ pub struct MsgChannelOpenTry {
 }
 /// MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgChannelOpenTryResponse {}
+pub struct MsgChannelOpenTryResponse {
+    #[prost(string, tag = "1")]
+    pub version: ::prost::alloc::string::String,
+}
 /// MsgChannelOpenAck defines a msg sent by a Relayer to Chain A to acknowledge
 /// the change of channel state to TRYOPEN on Chain B.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -394,11 +399,11 @@ pub struct MsgAcknowledgementResponse {
 #[repr(i32)]
 pub enum ResponseResultType {
     /// Default zero value enumeration
-    ResponseResultUnspecified = 0,
+    Unspecified = 0,
     /// The message did not call the IBC application callbacks (because, for example, the packet had already been relayed)
-    ResponseResultNoop = 1,
+    Noop = 1,
     /// The message was executed successfully
-    ResponseResultSuccess = 2,
+    Success = 2,
 }
 #[doc = r" Generated client implementations."]
 pub mod msg_client {

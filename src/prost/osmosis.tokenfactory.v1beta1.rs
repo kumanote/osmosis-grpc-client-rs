@@ -1,10 +1,12 @@
-/// MsgCreateDenom is the sdk.Msg type for allowing an account to create
-/// a new denom. It requires a sender address and a subdenomination.
-/// The (sender_address, sub_denomination) pair must be unique and cannot be
-/// re-used. The resulting denom created is `factory/{creator
-/// address}/{subdenom}`. The resultant denom's admin is originally set to be the
-/// creator, but this can be changed later. The token denom does not indicate the
-/// current admin.
+/// MsgCreateDenom defines the message structure for the CreateDenom gRPC service
+/// method. It allows an account to create a new denom. It requires a sender
+/// address and a sub denomination. The (sender_address, sub_denomination) tuple
+/// must be unique and cannot be re-used.
+///
+/// The resulting denom created is defined as
+/// <factory/{creatorAddress}/{subdenom}>. The resulting denom's admin is
+/// originally set to be the creator, but this can be changed later. The token
+/// denom does not indicate the current admin.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateDenom {
     #[prost(string, tag = "1")]
@@ -42,7 +44,21 @@ pub struct MsgBurn {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgBurnResponse {}
-// // ===================== MsgForceTransfer
+/// MsgChangeAdmin is the sdk.Msg type for allowing an admin account to reassign
+/// adminship of a denom to a new account
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgChangeAdmin {
+    #[prost(string, tag = "1")]
+    pub sender: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub denom: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub new_admin: ::prost::alloc::string::String,
+}
+/// MsgChangeAdminResponse defines the response structure for an executed
+/// MsgChangeAdmin message.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgChangeAdminResponse {}
 // message MsgForceTransfer {
 //   string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
 //   cosmos.base.v1beta1.Coin amount = 2 [
@@ -57,24 +73,24 @@ pub struct MsgBurnResponse {}
 
 // message MsgForceTransferResponse {}
 
-/// MsgChangeAdmin is the sdk.Msg type for allowing an admin account to reassign
-/// adminship of a denom to a new account
+/// MsgSetDenomMetadata is the sdk.Msg type for allowing an admin account to set
+/// the denom's bank metadata
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgChangeAdmin {
+pub struct MsgSetDenomMetadata {
     #[prost(string, tag = "1")]
     pub sender: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub denom: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub new_admin: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "2")]
+    pub metadata: ::core::option::Option<super::super::super::cosmos::bank::v1beta1::Metadata>,
 }
+/// MsgSetDenomMetadataResponse defines the response structure for an executed
+/// MsgSetDenomMetadata message.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgChangeAdminResponse {}
+pub struct MsgSetDenomMetadataResponse {}
 #[doc = r" Generated client implementations."]
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Msg defines the Msg service."]
+    #[doc = " Msg defines the tokefactory module's gRPC message service."]
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -174,9 +190,6 @@ pub mod msg_client {
                 http::uri::PathAndQuery::from_static("/osmosis.tokenfactory.v1beta1.Msg/Burn");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " ForceTransfer is deactivated for now because we need to think through edge"]
-        #[doc = " cases rpc ForceTransfer(MsgForceTransfer) returns"]
-        #[doc = " (MsgForceTransferResponse);"]
         pub async fn change_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgChangeAdmin>,
@@ -193,6 +206,22 @@ pub mod msg_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn set_denom_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgSetDenomMetadata>,
+        ) -> Result<tonic::Response<super::MsgSetDenomMetadataResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.tokenfactory.v1beta1.Msg/SetDenomMetadata",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// DenomAuthorityMetadata specifies metadata for addresses that have specific
@@ -204,7 +233,7 @@ pub struct DenomAuthorityMetadata {
     #[prost(string, tag = "1")]
     pub admin: ::prost::alloc::string::String,
 }
-/// Params holds parameters for the tokenfactory module
+/// Params defines the parameters for the tokenfactory module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     #[prost(message, repeated, tag = "1")]
@@ -221,21 +250,29 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
 }
+/// QueryDenomAuthorityMetadataRequest defines the request structure for the
+/// DenomAuthorityMetadata gRPC query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomAuthorityMetadataRequest {
     #[prost(string, tag = "1")]
     pub denom: ::prost::alloc::string::String,
 }
+/// QueryDenomAuthorityMetadataResponse defines the response structure for the
+/// DenomAuthorityMetadata gRPC query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomAuthorityMetadataResponse {
     #[prost(message, optional, tag = "1")]
     pub authority_metadata: ::core::option::Option<DenomAuthorityMetadata>,
 }
+/// QueryDenomsFromCreatorRequest defines the request structure for the
+/// DenomsFromCreator gRPC query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomsFromCreatorRequest {
     #[prost(string, tag = "1")]
     pub creator: ::prost::alloc::string::String,
 }
+/// QueryDenomsFromCreatorRequest defines the response structure for the
+/// DenomsFromCreator gRPC query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomsFromCreatorResponse {
     #[prost(string, repeated, tag = "1")]
@@ -302,7 +339,8 @@ pub mod query_client {
             self.inner = self.inner.accept_gzip();
             self
         }
-        #[doc = " Params returns the total set of minting parameters."]
+        #[doc = " Params defines a gRPC query method that returns the tokenfactory module's"]
+        #[doc = " parameters."]
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
@@ -318,6 +356,8 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/osmosis.tokenfactory.v1beta1.Query/Params");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " DenomAuthorityMetadata defines a gRPC query method for fetching"]
+        #[doc = " DenomAuthorityMetadata for a particular denom."]
         pub async fn denom_authority_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDenomAuthorityMetadataRequest>,
@@ -335,6 +375,8 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " DenomsFromCreator defines a gRPC query method for fetching all"]
+        #[doc = " denominations created by a specific admin/creator."]
         pub async fn denoms_from_creator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDenomsFromCreatorRequest>,
@@ -362,6 +404,9 @@ pub struct GenesisState {
     #[prost(message, repeated, tag = "2")]
     pub factory_denoms: ::prost::alloc::vec::Vec<GenesisDenom>,
 }
+/// GenesisDenom defines a tokenfactory denom that is defined within genesis
+/// state. The structure contains DenomAuthorityMetadata which defines the
+/// denom's admin.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisDenom {
     #[prost(string, tag = "1")]

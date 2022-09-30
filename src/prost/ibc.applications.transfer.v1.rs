@@ -137,7 +137,7 @@ pub struct Params {
 /// method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomTraceRequest {
-    /// hash (in hex format) of the denomination trace information.
+    /// hash (in hex format) or denom (full denom with ibc prefix) of the denomination trace information.
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
 }
@@ -197,6 +197,23 @@ pub struct QueryDenomHashResponse {
     /// hash (in hex format) of the denomination trace information.
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
+}
+/// QueryEscrowAddressRequest is the request type for the EscrowAddress RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryEscrowAddressRequest {
+    /// unique port identifier
+    #[prost(string, tag = "1")]
+    pub port_id: ::prost::alloc::string::String,
+    /// unique channel identifier
+    #[prost(string, tag = "2")]
+    pub channel_id: ::prost::alloc::string::String,
+}
+/// QueryEscrowAddressResponse is the response type of the EscrowAddress RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryEscrowAddressResponse {
+    /// the escrow account address
+    #[prost(string, tag = "1")]
+    pub escrow_address: ::prost::alloc::string::String,
 }
 #[doc = r" Generated client implementations."]
 pub mod query_client {
@@ -323,6 +340,23 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/ibc.applications.transfer.v1.Query/DenomHash",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " EscrowAddress returns the escrow address for a particular port and channel id."]
+        pub async fn escrow_address(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryEscrowAddressRequest>,
+        ) -> Result<tonic::Response<super::QueryEscrowAddressResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.applications.transfer.v1.Query/EscrowAddress",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }

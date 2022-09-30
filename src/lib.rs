@@ -28,6 +28,16 @@ pub mod tendermint {
 }
 
 pub mod cosmos {
+    pub mod app {
+        pub mod module {
+            pub mod v1alpha1 {
+                include!("prost/cosmos.app.module.v1alpha1.rs");
+            }
+        }
+        pub mod v1alpha1 {
+            include!("prost/cosmos.app.v1alpha1.rs");
+        }
+    }
     pub mod auth {
         pub mod v1beta1 {
             include!("prost/cosmos.auth.v1beta1.rs");
@@ -94,6 +104,16 @@ pub mod cosmos {
     }
 
     pub mod crypto {
+        pub mod hd {
+            pub mod v1 {
+                include!("prost/cosmos.crypto.hd.v1.rs");
+            }
+        }
+        pub mod keyring {
+            pub mod v1 {
+                include!("prost/cosmos.crypto.keyring.v1.rs");
+            }
+        }
         pub mod multisig {
             include!("prost/cosmos.crypto.multisig.rs");
             pub mod v1beta1 {
@@ -127,14 +147,49 @@ pub mod cosmos {
     }
 
     pub mod gov {
+        pub mod v1 {
+            include!("prost/cosmos.gov.v1.rs");
+        }
         pub mod v1beta1 {
             include!("prost/cosmos.gov.v1beta1.rs");
+        }
+    }
+
+    pub mod group {
+        pub mod v1 {
+            include!("prost/cosmos.group.v1.rs");
         }
     }
 
     pub mod mint {
         pub mod v1beta1 {
             include!("prost/cosmos.mint.v1beta1.rs");
+        }
+    }
+
+    pub mod msg {
+        pub mod v1 {
+            include!("prost/cosmos.msg.v1.rs");
+        }
+    }
+
+    pub mod nft {
+        pub mod v1beta1 {
+            include!("prost/cosmos.nft.v1beta1.rs");
+        }
+    }
+
+    pub mod orm {
+        pub mod module {
+            pub mod v1beta1 {
+                include!("prost/cosmos.orm.module.v1alpha1.rs");
+            }
+        }
+        pub mod v1 {
+            include!("prost/cosmos.orm.v1.rs");
+        }
+        pub mod v1alpha1 {
+            include!("prost/cosmos.orm.v1alpha1.rs");
         }
     }
 
@@ -282,6 +337,11 @@ pub mod osmosis {
             include!("prost/osmosis.store.v1beta1.rs");
         }
     }
+    pub mod streamswap {
+        pub mod v1 {
+            include!("prost/osmosis.streamswap.v1.rs");
+        }
+    }
     pub mod superfluid {
         include!("prost/osmosis.superfluid.rs");
         pub mod v1beta1 {
@@ -291,6 +351,11 @@ pub mod osmosis {
     pub mod tokenfactory {
         pub mod v1beta1 {
             include!("prost/osmosis.tokenfactory.v1beta1.rs");
+        }
+    }
+    pub mod twap {
+        pub mod v1beta1 {
+            include!("prost/osmosis.twap.v1beta1.rs");
         }
     }
     pub mod txfees {
