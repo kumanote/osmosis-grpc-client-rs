@@ -443,6 +443,32 @@ pub struct QueryConsensusStatesResponse {
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
 }
+/// QueryConsensusStateHeightsRequest is the request type for Query/ConsensusStateHeights
+/// RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateHeightsRequest {
+    /// client identifier
+    #[prost(string, tag = "1")]
+    pub client_id: ::prost::alloc::string::String,
+    /// pagination request
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
+    >,
+}
+/// QueryConsensusStateHeightsResponse is the response type for the
+/// Query/ConsensusStateHeights RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateHeightsResponse {
+    /// consensus state heights
+    #[prost(message, repeated, tag = "1")]
+    pub consensus_state_heights: ::prost::alloc::vec::Vec<Height>,
+    /// pagination response
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
+}
 /// QueryClientStatusRequest is the request type for the Query/ClientStatus RPC
 /// method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -619,6 +645,24 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/ibc.core.client.v1.Query/ConsensusStates");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " ConsensusStateHeights queries the height of every consensus states associated with a given client."]
+        pub async fn consensus_state_heights(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryConsensusStateHeightsRequest>,
+        ) -> Result<tonic::Response<super::QueryConsensusStateHeightsResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.core.client.v1.Query/ConsensusStateHeights",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Status queries the status of an IBC client."]

@@ -124,7 +124,7 @@ pub mod query_client {
             self
         }
         #[doc = " FeeTokens returns a list of all the whitelisted fee tokens and their"]
-        #[doc = " corresponding pools It does not include the BaseDenom, which has its own"]
+        #[doc = " corresponding pools. It does not include the BaseDenom, which has its own"]
         #[doc = " query endpoint"]
         pub async fn fee_tokens(
             &mut self,
@@ -141,6 +141,7 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/osmosis.txfees.v1beta1.Query/FeeTokens");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " DenomSpotPrice returns all spot prices by each registered token denom."]
         pub async fn denom_spot_price(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDenomSpotPriceRequest>,
@@ -157,6 +158,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " Returns the poolID for a specified denom input."]
         pub async fn denom_pool_id(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDenomPoolIdRequest>,
@@ -172,6 +174,7 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/osmosis.txfees.v1beta1.Query/DenomPoolId");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " Returns a list of all base denom tokens and their corresponding pools."]
         pub async fn base_denom(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryBaseDenomRequest>,

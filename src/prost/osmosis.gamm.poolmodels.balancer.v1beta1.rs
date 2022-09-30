@@ -10,6 +10,7 @@ pub struct MsgCreateBalancerPool {
     #[prost(string, tag = "4")]
     pub future_pool_governor: ::prost::alloc::string::String,
 }
+/// Returns the poolID
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateBalancerPoolResponse {
     #[prost(uint64, tag = "1")]

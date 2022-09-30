@@ -9,18 +9,18 @@ This is a GRPC client package of [osmosis-labs/osmosis](https://github.com/osmos
 
 **proto files**
 
-- see [osmosis/go.mod at v11.0.0 · osmosis-labs/osmosis](https://github.com/osmosis-labs/osmosis/blob/v11.0.0/go.mod) for listing related
+- see [osmosis/go.mod at v12.0.0 · osmosis-labs/osmosis](https://github.com/osmosis-labs/osmosis/blob/v12.0.0/go.mod) for listing related
 packages versions.
-- and also [cosmos-sdk/go.mod at v0.45.6](https://github.com/cosmos/cosmos-sdk/blob/v0.45.6/go.mod)
+- and also [cosmos-sdk/go.mod at v0.46.1](https://github.com/cosmos/cosmos-sdk/blob/v0.46.1/go.mod)
 
 ---
 
-- [osmosis/proto/osmosis at v11.0.0](https://github.com/osmosis-labs/osmosis/tree/v11.0.0/proto/osmosis)
-- [cosmos-sdk/proto at v0.45.6](https://github.com/cosmos/cosmos-sdk/tree/v0.45.6/proto)
-- [ibc-go/proto at v3.0.0](https://github.com/cosmos/ibc-go/tree/v3.0.0/proto)
-- [tendermint/proto/tendermint at v0.34.19](https://github.com/tendermint/tendermint/tree/v0.34.19/proto/tendermint)
+- [osmosis/proto/osmosis at v12.0.0](https://github.com/osmosis-labs/osmosis/tree/v12.0.0/proto/osmosis)
+- [cosmos-sdk/proto at v0.46.1](https://github.com/cosmos/cosmos-sdk/tree/v0.46.1/proto)
+- [ibc-go/proto at v3.3.0](https://github.com/cosmos/ibc-go/tree/v3.3.0/proto)
+- [tendermint/proto/tendermint at v0.34.21](https://github.com/tendermint/tendermint/tree/v0.34.21/proto/tendermint)
 - [cosmos/cosmos-proto](https://github.com/cosmos/cosmos-proto/tree/main/proto/cosmos_proto)
-- [ics23/proofs.proto at v0.6.6](https://github.com/confio/ics23/blob/v0.6.6/proofs.proto)
+- [ics23/proofs.proto at v0.7.0](https://github.com/confio/ics23/blob/v0.6.6/proofs.proto)
 - [protobuf/gogo.proto at v1.3.3-alpha.regen.1](https://github.com/regen-network/protobuf/blob/v1.3.3-alpha.regen.1/gogoproto/gogo.proto)
 - [google/api](https://fuchsia.googlesource.com/third_party/googleapis)
 
@@ -43,7 +43,7 @@ packages versions.
 
 ```toml
 [dependencies]
-osmosis-grpc-client = { version = "11.0.0", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
+osmosis-grpc-client = { version = "12.0.0", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
 ```
 
 **rust files**

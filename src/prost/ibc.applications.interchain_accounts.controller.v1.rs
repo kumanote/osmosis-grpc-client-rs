@@ -6,6 +6,20 @@ pub struct Params {
     #[prost(bool, tag = "1")]
     pub controller_enabled: bool,
 }
+/// QueryInterchainAccountRequest is the request type for the Query/InterchainAccount RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryInterchainAccountRequest {
+    #[prost(string, tag = "1")]
+    pub owner: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub connection_id: ::prost::alloc::string::String,
+}
+/// QueryInterchainAccountResponse the response type for the Query/InterchainAccount RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryInterchainAccountResponse {
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+}
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
@@ -76,6 +90,23 @@ pub mod query_client {
         pub fn accept_gzip(mut self) -> Self {
             self.inner = self.inner.accept_gzip();
             self
+        }
+        #[doc = " InterchainAccount returns the interchain account address for a given owner address on a given connection"]
+        pub async fn interchain_account(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryInterchainAccountRequest>,
+        ) -> Result<tonic::Response<super::QueryInterchainAccountResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.applications.interchain_accounts.controller.v1.Query/InterchainAccount",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Params queries all parameters of the ICA controller submodule."]
         pub async fn params(

@@ -112,7 +112,12 @@ pub struct MsgJoinPool {
     pub token_in_maxs: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgJoinPoolResponse {}
+pub struct MsgJoinPoolResponse {
+    #[prost(string, tag = "1")]
+    pub share_out_amount: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "2")]
+    pub token_in: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
 /// ===================== MsgExitPool
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExitPool {
@@ -126,7 +131,10 @@ pub struct MsgExitPool {
     pub token_out_mins: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgExitPoolResponse {}
+pub struct MsgExitPoolResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub token_out: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
 /// ===================== MsgSwapExactAmountIn
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SwapAmountInRoute {
@@ -797,6 +805,7 @@ pub struct Params {
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
     pub pools: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    /// will be renamed to next_pool_id in an upcoming version
     #[prost(uint64, tag = "2")]
     pub next_pool_number: u64,
     #[prost(message, optional, tag = "3")]

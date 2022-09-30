@@ -12,13 +12,14 @@ pub struct GenericAuthorization {
 pub struct Grant {
     #[prost(message, optional, tag = "1")]
     pub authorization: ::core::option::Option<::prost_types::Any>,
+    /// time when the grant will expire and will be pruned. If null, then the grant
+    /// doesn't have a time expiration (other conditions  in `authorization`
+    /// may apply to invalidate the grant)
     #[prost(message, optional, tag = "2")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// GrantAuthorization extends a grant with both the addresses of the grantee and granter.
 /// It is used in genesis.proto and query.proto
-///
-/// Since: cosmos-sdk 0.45.2
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrantAuthorization {
     #[prost(string, tag = "1")]
@@ -29,6 +30,13 @@ pub struct GrantAuthorization {
     pub authorization: ::core::option::Option<::prost_types::Any>,
     #[prost(message, optional, tag = "4")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
+}
+/// GrantQueueItem contains the list of TypeURL of a sdk.Msg.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GrantQueueItem {
+    /// msg_type_urls contains the list of TypeURL of a sdk.Msg.
+    #[prost(string, repeated, tag = "1")]
+    pub msg_type_urls: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// MsgGrant is a request type for Grant method. It declares authorization to the grantee
 /// on behalf of the granter with the provided expiration time.
@@ -328,7 +336,7 @@ pub mod query_client {
         }
         #[doc = " GranterGrants returns list of `GrantAuthorization`, granted by granter."]
         #[doc = ""]
-        #[doc = " Since: cosmos-sdk 0.45.2"]
+        #[doc = " Since: cosmos-sdk 0.46"]
         pub async fn granter_grants(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranterGrantsRequest>,
@@ -346,7 +354,7 @@ pub mod query_client {
         }
         #[doc = " GranteeGrants returns a list of `GrantAuthorization` by grantee."]
         #[doc = ""]
-        #[doc = " Since: cosmos-sdk 0.45.2"]
+        #[doc = " Since: cosmos-sdk 0.46"]
         pub async fn grantee_grants(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranteeGrantsRequest>,

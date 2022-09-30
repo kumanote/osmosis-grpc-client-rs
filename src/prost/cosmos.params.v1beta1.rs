@@ -36,6 +36,32 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub param: ::core::option::Option<ParamChange>,
 }
+/// QuerySubspacesRequest defines a request type for querying for all registered
+/// subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesRequest {}
+/// QuerySubspacesResponse defines the response types for querying for all
+/// registered subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
+}
+/// Subspace defines a parameter subspace name and all the keys that exist for
+/// the subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Subspace {
+    #[prost(string, tag = "1")]
+    pub subspace: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "2")]
+    pub keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
 #[doc = r" Generated client implementations."]
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -111,6 +137,24 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Params");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " Subspaces queries for all registered subspaces and all keys for a subspace."]
+        #[doc = ""]
+        #[doc = " Since: cosmos-sdk 0.46"]
+        pub async fn subspaces(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QuerySubspacesRequest>,
+        ) -> Result<tonic::Response<super::QuerySubspacesResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Subspaces");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

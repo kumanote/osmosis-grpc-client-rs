@@ -48,7 +48,7 @@ pub struct DenomUnit {
     pub denom: ::prost::alloc::string::String,
     /// exponent represents power of 10 exponent that one must
     /// raise the base_denom to in order to equal the given DenomUnit's denom
-    /// 1 denom = 1^exponent base_denom
+    /// 1 denom = 10^exponent base_denom
     /// (e.g. with a base_denom of uatom, one can create a DenomUnit of 'atom' with
     /// exponent = 6, thus: 1 atom = 10^6 uatom).
     #[prost(uint32, tag = "2")]
@@ -84,6 +84,17 @@ pub struct Metadata {
     /// Since: cosmos-sdk 0.43
     #[prost(string, tag = "6")]
     pub symbol: ::prost::alloc::string::String,
+    /// URI to a document (on or off-chain) that contains additional information. Optional.
+    ///
+    /// Since: cosmos-sdk 0.46
+    #[prost(string, tag = "7")]
+    pub uri: ::prost::alloc::string::String,
+    /// URIHash is a sha256 hash of a document pointed by URI. It's used to verify that
+    /// the document didn't change. Optional.
+    ///
+    /// Since: cosmos-sdk 0.46
+    #[prost(string, tag = "8")]
+    pub uri_hash: ::prost::alloc::string::String,
 }
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -239,6 +250,8 @@ pub struct QueryAllBalancesResponse {
 }
 /// QuerySpendableBalancesRequest defines the gRPC request structure for querying
 /// an account's spendable balances.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySpendableBalancesRequest {
     /// address is the address to query spendable balances for.
@@ -250,6 +263,8 @@ pub struct QuerySpendableBalancesRequest {
 }
 /// QuerySpendableBalancesResponse defines the gRPC response structure for querying
 /// an account's spendable balances.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySpendableBalancesResponse {
     /// balances is the spendable balances of all the coins.
@@ -337,6 +352,43 @@ pub struct QueryDenomMetadataResponse {
     /// metadata describes and provides all the client information for the requested token.
     #[prost(message, optional, tag = "1")]
     pub metadata: ::core::option::Option<Metadata>,
+}
+/// QueryDenomOwnersRequest defines the request type for the DenomOwners RPC query,
+/// which queries for a paginated set of all account holders of a particular
+/// denomination.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomOwnersRequest {
+    /// denom defines the coin denomination to query all account holders for.
+    #[prost(string, tag = "1")]
+    pub denom: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// DenomOwner defines structure representing an account that owns or holds a
+/// particular denominated token. It contains the account address and account
+/// balance of the denominated token.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DenomOwner {
+    /// address defines the address that owns a particular denomination.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// balance is the balance of the denominated coin for an account.
+    #[prost(message, optional, tag = "2")]
+    pub balance: ::core::option::Option<super::super::base::v1beta1::Coin>,
+}
+/// QueryDenomOwnersResponse defines the RPC response of a DenomOwners RPC query.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomOwnersResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub denom_owners: ::prost::alloc::vec::Vec<DenomOwner>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 #[doc = r" Generated client implementations."]
 pub mod query_client {
@@ -432,6 +484,8 @@ pub mod query_client {
         }
         #[doc = " SpendableBalances queries the spenable balance of all coins for a single"]
         #[doc = " account."]
+        #[doc = ""]
+        #[doc = " Since: cosmos-sdk 0.46"]
         pub async fn spendable_balances(
             &mut self,
             request: impl tonic::IntoRequest<super::QuerySpendableBalancesRequest>,
@@ -510,7 +564,8 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomMetadata");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " DenomsMetadata queries the client metadata for all registered coin denominations."]
+        #[doc = " DenomsMetadata queries the client metadata for all registered coin"]
+        #[doc = " denominations."]
         pub async fn denoms_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDenomsMetadataRequest>,
@@ -524,6 +579,25 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomsMetadata");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " DenomOwners queries for all account addresses that own a particular token"]
+        #[doc = " denomination."]
+        #[doc = ""]
+        #[doc = " Since: cosmos-sdk 0.46"]
+        pub async fn denom_owners(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDenomOwnersRequest>,
+        ) -> Result<tonic::Response<super::QueryDenomOwnersResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomOwners");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
