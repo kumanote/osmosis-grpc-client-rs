@@ -1,6 +1,6 @@
 [package]
 name = "osmosis-grpc-client"
-version = "12.0.0"
+version = "12.1.0"
 authors = ["Hiroki Tanaka <support@kumano-te.com>"]
 license = "MIT"
 edition = "2021"
