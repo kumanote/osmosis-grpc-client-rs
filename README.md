@@ -43,7 +43,7 @@ packages versions.
 
 ```toml
 [dependencies]
-osmosis-grpc-client = { version = "12.2.0", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
+osmosis-grpc-client = { version = "12.2.1", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
 ```
 
 **rust files**
