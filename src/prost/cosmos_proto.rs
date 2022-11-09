@@ -6,11 +6,11 @@ pub struct InterfaceDescriptor {
     /// a period) such that the fully qualified name of the interface will be
     /// package.name, ex. for the package a.b and interface named C, the
     /// fully-qualified name will be a.b.C.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub name: ::prost::alloc::string::String,
     /// description is a human-readable description of the interface and its
     /// purpose.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub description: ::prost::alloc::string::String,
 }
 /// ScalarDescriptor describes an scalar type to be used with
@@ -26,18 +26,18 @@ pub struct ScalarDescriptor {
     /// a period) such that the fully qualified name of the scalar will be
     /// package.name, ex. for the package a.b and scalar named C, the
     /// fully-qualified name will be a.b.C.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub name: ::prost::alloc::string::String,
     /// description is a human-readable description of the scalar and its
     /// encoding format. For instance a big integer or decimal scalar should
     /// specify precisely the expected encoding format.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub description: ::prost::alloc::string::String,
     /// field_type is the type of field with which this scalar can be used.
     /// Scalars can be used with one and only one type of field so that
     /// encoding standards and simple and clear. Currently only string and
     /// bytes fields are supported for scalars.
-    #[prost(enumeration = "ScalarType", repeated, tag = "3")]
+    #[prost(enumeration="ScalarType", repeated, tag="3")]
     pub field_type: ::prost::alloc::vec::Vec<i32>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -46,4 +46,17 @@ pub enum ScalarType {
     Unspecified = 0,
     String = 1,
     Bytes = 2,
+}
+impl ScalarType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ScalarType::Unspecified => "SCALAR_TYPE_UNSPECIFIED",
+            ScalarType::String => "SCALAR_TYPE_STRING",
+            ScalarType::Bytes => "SCALAR_TYPE_BYTES",
+        }
+    }
 }

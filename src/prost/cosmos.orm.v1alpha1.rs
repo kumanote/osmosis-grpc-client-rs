@@ -1,11 +1,11 @@
 /// ModuleSchemaDescriptor describe's a module's ORM schema.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleSchemaDescriptor {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub schema_file: ::prost::alloc::vec::Vec<module_schema_descriptor::FileEntry>,
     /// prefix is an optional prefix that precedes all keys in this module's
     /// store.
-    #[prost(bytes = "vec", tag = "2")]
+    #[prost(bytes="vec", tag="2")]
     pub prefix: ::prost::alloc::vec::Vec<u8>,
 }
 /// Nested message and enum types in `ModuleSchemaDescriptor`.
@@ -15,17 +15,17 @@ pub mod module_schema_descriptor {
     pub struct FileEntry {
         /// id is a prefix that will be varint encoded and prepended to all the
         /// table keys specified in the file's tables.
-        #[prost(uint32, tag = "1")]
+        #[prost(uint32, tag="1")]
         pub id: u32,
         /// proto_file_name is the name of a file .proto in that contains
         /// table definitions. The .proto file must be in a package that the
         /// module has referenced using cosmos.app.v1.ModuleDescriptor.use_package.
-        #[prost(string, tag = "2")]
+        #[prost(string, tag="2")]
         pub proto_file_name: ::prost::alloc::string::String,
         /// storage_type optionally indicates the type of storage this file's
         /// tables should used. If it is left unspecified, the default KV-storage
         /// of the app will be used.
-        #[prost(enumeration = "super::StorageType", tag = "3")]
+        #[prost(enumeration="super::StorageType", tag="3")]
         pub storage_type: i32,
     }
 }
@@ -62,4 +62,19 @@ pub enum StorageType {
     /// instead of STORAGE_TYPE_DEFAULT_UNSPECIFIED or STORAGE_TYPE_INDEX
     /// because this is the only type of persistent storage available.
     Commitment = 4,
+}
+impl StorageType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            StorageType::DefaultUnspecified => "STORAGE_TYPE_DEFAULT_UNSPECIFIED",
+            StorageType::Memory => "STORAGE_TYPE_MEMORY",
+            StorageType::Transient => "STORAGE_TYPE_TRANSIENT",
+            StorageType::Index => "STORAGE_TYPE_INDEX",
+            StorageType::Commitment => "STORAGE_TYPE_COMMITMENT",
+        }
+    }
 }

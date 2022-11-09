@@ -1,6 +1,6 @@
 [package]
 name = "osmosis-grpc-client"
-version = "12.2.0"
+version = "12.2.1"
 authors = ["Hiroki Tanaka <support@kumano-te.com>"]
 license = "MIT"
 edition = "2021"
@@ -13,26 +13,12 @@ build = "build.rs"
 [dependencies]
 bytes = "1.1.0"
 dotenv = "0.15.0"
-
-[dependencies.futures]
-version = "0.3"
-
-[dependencies.tokio]
-version = "1.12"
-features = ["full"]
-
-[dependencies.subtle-encoding]
-version = "0.5"
-
-[dependencies.prost]
-version = "0.8"
-
-[dependencies.prost-types]
-version = "0.8"
-
-[dependencies.tonic]
-version = "0.5.2"
-features = ["tls", "compression"]
+futures = "0.3"
+tokio = { version = "1", features = ["full"] }
+subtle-encoding = "0.5"
+prost = "0.11"
+prost-types = "0.11"
+tonic = { version = "0.8.2", features = ["tls", "gzip", "prost"] }
 
 [build-dependencies]
-tonic-build = "0.5.2"
+tonic-build = "0.8.2"
