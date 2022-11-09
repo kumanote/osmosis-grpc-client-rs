@@ -2,4 +2,5 @@
 /// module-scoped DB's. In the future it may provide gRPC services for interacting
 /// with ORM data.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Module {}
+pub struct Module {
+}

@@ -3,16 +3,16 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Member {
     /// address is the member's account address.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// weight is the member's voting weight that should be greater than 0.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub weight: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata attached to the member.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
     /// added_at is a timestamp specifying when a member was added.
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag="4")]
     pub added_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// MemberRequest represents a group member to be used in Msg server requests.
@@ -21,45 +21,45 @@ pub struct Member {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MemberRequest {
     /// address is the member's account address.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// weight is the member's voting weight that should be greater than 0.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub weight: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata attached to the member.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
 }
 /// ThresholdDecisionPolicy is a decision policy where a proposal passes when it
 /// satisfies the two following conditions:
 /// 1. The sum of all `YES` voters' weights is greater or equal than the defined
-///    `threshold`.
+///     `threshold`.
 /// 2. The voting and execution periods of the proposal respect the parameters
-///    given by `windows`.
+///     given by `windows`.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ThresholdDecisionPolicy {
     /// threshold is the minimum weighted sum of `YES` votes that must be met or
     /// exceeded for a proposal to succeed.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub threshold: ::prost::alloc::string::String,
     /// windows defines the different windows for voting and execution.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub windows: ::core::option::Option<DecisionPolicyWindows>,
 }
 /// PercentageDecisionPolicy is a decision policy where a proposal passes when
 /// it satisfies the two following conditions:
 /// 1. The percentage of all `YES` voters' weights out of the total group weight
-///    is greater or equal than the given `percentage`.
+///     is greater or equal than the given `percentage`.
 /// 2. The voting and execution periods of the proposal respect the parameters
-///    given by `windows`.
+///     given by `windows`.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PercentageDecisionPolicy {
     /// percentage is the minimum percentage the weighted sum of `YES` votes must
     /// meet for a proposal to succeed.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub percentage: ::prost::alloc::string::String,
     /// windows defines the different windows for voting and execution.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub windows: ::core::option::Option<DecisionPolicyWindows>,
 }
 /// DecisionPolicyWindows defines the different windows for voting and execution.
@@ -67,7 +67,7 @@ pub struct PercentageDecisionPolicy {
 pub struct DecisionPolicyWindows {
     /// voting_period is the duration from submission of a proposal to the end of voting period
     /// Within this times votes can be submitted with MsgVote.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub voting_period: ::core::option::Option<::prost_types::Duration>,
     /// min_execution_period is the minimum duration after the proposal submission
     /// where members can start sending MsgExec. This means that the window for
@@ -80,7 +80,7 @@ pub struct DecisionPolicyWindows {
     /// `voting_period + max_execution_period`, or else the above execution window
     /// is empty, meaning that all proposals created with this decision policy
     /// won't be able to be executed.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub min_execution_period: ::core::option::Option<::prost_types::Duration>,
 }
 //
@@ -91,61 +91,61 @@ pub struct DecisionPolicyWindows {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupInfo {
     /// id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub id: u64,
     /// admin is the account address of the group's admin.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub admin: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata to attached to the group.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
     /// version is used to track changes to a group's membership structure that
     /// would break existing proposals. Whenever any members weight is changed,
     /// or any member is added or removed this version is incremented and will
     /// cause proposals based on older versions of this group to fail
-    #[prost(uint64, tag = "4")]
+    #[prost(uint64, tag="4")]
     pub version: u64,
     /// total_weight is the sum of the group members' weights.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag="5")]
     pub total_weight: ::prost::alloc::string::String,
     /// created_at is a timestamp specifying when a group was created.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag="6")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// GroupMember represents the relationship between a group and a member.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupMember {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
     /// member is the member data.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub member: ::core::option::Option<Member>,
 }
 /// GroupPolicyInfo represents the high-level on-chain information for a group policy.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupPolicyInfo {
     /// address is the account address of group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub admin: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata to attached to the group policy.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag="4")]
     pub metadata: ::prost::alloc::string::String,
     /// version is used to track changes to a group's GroupPolicyInfo structure that
     /// would create a different result on a running proposal.
-    #[prost(uint64, tag = "5")]
+    #[prost(uint64, tag="5")]
     pub version: u64,
     /// decision_policy specifies the group policy's decision policy.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag="6")]
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
     /// created_at is a timestamp specifying when a group policy was created.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag="7")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// Proposal defines a group proposal. Any member of a group can submit a proposal
@@ -155,86 +155,86 @@ pub struct GroupPolicyInfo {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Proposal {
     /// id is the unique id of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub id: u64,
     /// group_policy_address is the account address of group policy.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub group_policy_address: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata to attached to the proposal.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
     /// proposers are the account addresses of the proposers.
-    #[prost(string, repeated, tag = "4")]
+    #[prost(string, repeated, tag="4")]
     pub proposers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// submit_time is a timestamp specifying when a proposal was submitted.
-    #[prost(message, optional, tag = "5")]
+    #[prost(message, optional, tag="5")]
     pub submit_time: ::core::option::Option<::prost_types::Timestamp>,
     /// group_version tracks the version of the group at proposal submission.
     /// This field is here for informational purposes only.
-    #[prost(uint64, tag = "6")]
+    #[prost(uint64, tag="6")]
     pub group_version: u64,
     /// group_policy_version tracks the version of the group policy at proposal submission.
     /// When a decision policy is changed, existing proposals from previous policy
     /// versions will become invalid with the `ABORTED` status.
     /// This field is here for informational purposes only.
-    #[prost(uint64, tag = "7")]
+    #[prost(uint64, tag="7")]
     pub group_policy_version: u64,
     /// status represents the high level position in the life cycle of the proposal. Initial value is Submitted.
-    #[prost(enumeration = "ProposalStatus", tag = "8")]
+    #[prost(enumeration="ProposalStatus", tag="8")]
     pub status: i32,
     /// final_tally_result contains the sums of all weighted votes for this
     /// proposal for each vote option. It is empty at submission, and only
     /// populated after tallying, at voting period end or at proposal execution,
     /// whichever happens first.
-    #[prost(message, optional, tag = "9")]
+    #[prost(message, optional, tag="9")]
     pub final_tally_result: ::core::option::Option<TallyResult>,
     /// voting_period_end is the timestamp before which voting must be done.
     /// Unless a successfull MsgExec is called before (to execute a proposal whose
     /// tally is successful before the voting period ends), tallying will be done
     /// at this point, and the `final_tally_result`and `status` fields will be
     /// accordingly updated.
-    #[prost(message, optional, tag = "10")]
+    #[prost(message, optional, tag="10")]
     pub voting_period_end: ::core::option::Option<::prost_types::Timestamp>,
     /// executor_result is the final result of the proposal execution. Initial value is NotRun.
-    #[prost(enumeration = "ProposalExecutorResult", tag = "11")]
+    #[prost(enumeration="ProposalExecutorResult", tag="11")]
     pub executor_result: i32,
     /// messages is a list of `sdk.Msg`s that will be executed if the proposal passes.
-    #[prost(message, repeated, tag = "12")]
+    #[prost(message, repeated, tag="12")]
     pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
 }
 /// TallyResult represents the sum of weighted votes for each vote option.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TallyResult {
     /// yes_count is the weighted sum of yes votes.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub yes_count: ::prost::alloc::string::String,
     /// abstain_count is the weighted sum of abstainers.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub abstain_count: ::prost::alloc::string::String,
     /// no_count is the weighted sum of no votes.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub no_count: ::prost::alloc::string::String,
     /// no_with_veto_count is the weighted sum of veto.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag="4")]
     pub no_with_veto_count: ::prost::alloc::string::String,
 }
 /// Vote represents a vote for a proposal.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vote {
     /// proposal is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// voter is the account address of the voter.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub voter: ::prost::alloc::string::String,
     /// option is the voter's choice on the proposal.
-    #[prost(enumeration = "VoteOption", tag = "3")]
+    #[prost(enumeration="VoteOption", tag="3")]
     pub option: i32,
     /// metadata is any arbitrary metadata to attached to the vote.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag="4")]
     pub metadata: ::prost::alloc::string::String,
     /// submit_time is the timestamp when the vote was submitted.
-    #[prost(message, optional, tag = "5")]
+    #[prost(message, optional, tag="5")]
     pub submit_time: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// VoteOption enumerates the valid vote options for a given proposal.
@@ -252,6 +252,21 @@ pub enum VoteOption {
     No = 3,
     /// VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option.
     NoWithVeto = 4,
+}
+impl VoteOption {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            VoteOption::Unspecified => "VOTE_OPTION_UNSPECIFIED",
+            VoteOption::Yes => "VOTE_OPTION_YES",
+            VoteOption::Abstain => "VOTE_OPTION_ABSTAIN",
+            VoteOption::No => "VOTE_OPTION_NO",
+            VoteOption::NoWithVeto => "VOTE_OPTION_NO_WITH_VETO",
+        }
+    }
 }
 /// ProposalStatus defines proposal statuses.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -274,6 +289,22 @@ pub enum ProposalStatus {
     /// When this happens the final status is Withdrawn.
     Withdrawn = 5,
 }
+impl ProposalStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ProposalStatus::Unspecified => "PROPOSAL_STATUS_UNSPECIFIED",
+            ProposalStatus::Submitted => "PROPOSAL_STATUS_SUBMITTED",
+            ProposalStatus::Accepted => "PROPOSAL_STATUS_ACCEPTED",
+            ProposalStatus::Rejected => "PROPOSAL_STATUS_REJECTED",
+            ProposalStatus::Aborted => "PROPOSAL_STATUS_ABORTED",
+            ProposalStatus::Withdrawn => "PROPOSAL_STATUS_WITHDRAWN",
+        }
+    }
+}
 /// ProposalExecutorResult defines types of proposal executor results.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -287,6 +318,20 @@ pub enum ProposalExecutorResult {
     /// The executor returned an error and proposed action didn't update state.
     Failure = 3,
 }
+impl ProposalExecutorResult {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ProposalExecutorResult::Unspecified => "PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED",
+            ProposalExecutorResult::NotRun => "PROPOSAL_EXECUTOR_RESULT_NOT_RUN",
+            ProposalExecutorResult::Success => "PROPOSAL_EXECUTOR_RESULT_SUCCESS",
+            ProposalExecutorResult::Failure => "PROPOSAL_EXECUTOR_RESULT_FAILURE",
+        }
+    }
+}
 //
 // Groups
 //
@@ -295,71 +340,74 @@ pub enum ProposalExecutorResult {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroup {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// members defines the group members.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag="2")]
     pub members: ::prost::alloc::vec::Vec<MemberRequest>,
     /// metadata is any arbitrary metadata to attached to the group.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgCreateGroupResponse is the Msg/CreateGroup response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupResponse {
     /// group_id is the unique ID of the newly created group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
 }
 /// MsgUpdateGroupMembers is the Msg/UpdateGroupMembers request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMembers {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
     /// member_updates is the list of members to update,
     /// set weight to 0 to remove a member.
-    #[prost(message, repeated, tag = "3")]
+    #[prost(message, repeated, tag="3")]
     pub member_updates: ::prost::alloc::vec::Vec<MemberRequest>,
 }
 /// MsgUpdateGroupMembersResponse is the Msg/UpdateGroupMembers response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupMembersResponse {}
+pub struct MsgUpdateGroupMembersResponse {
+}
 /// MsgUpdateGroupAdmin is the Msg/UpdateGroupAdmin request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupAdmin {
     /// admin is the current account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
     /// new_admin is the group new admin account address.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub new_admin: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupAdminResponse is the Msg/UpdateGroupAdmin response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupAdminResponse {}
+pub struct MsgUpdateGroupAdminResponse {
+}
 /// MsgUpdateGroupMetadata is the Msg/UpdateGroupMetadata request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMetadata {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
     /// metadata is the updated group's metadata.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupMetadataResponse is the Msg/UpdateGroupMetadata response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupMetadataResponse {}
+pub struct MsgUpdateGroupMetadataResponse {
+}
 //
 // Group Policies
 //
@@ -368,201 +416,207 @@ pub struct MsgUpdateGroupMetadataResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupPolicy {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
     /// metadata is any arbitrary metadata attached to the group policy.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
     /// decision_policy specifies the group policy's decision policy.
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag="4")]
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgCreateGroupPolicyResponse is the Msg/CreateGroupPolicy response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupPolicyResponse {
     /// address is the account address of the newly created group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyAdmin is the Msg/UpdateGroupPolicyAdmin request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyAdmin {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_policy_address is the account address of the group policy.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub group_policy_address: ::prost::alloc::string::String,
     /// new_admin is the new group policy admin.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub new_admin: ::prost::alloc::string::String,
 }
 /// MsgCreateGroupWithPolicy is the Msg/CreateGroupWithPolicy request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupWithPolicy {
     /// admin is the account address of the group and group policy admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// members defines the group members.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag="2")]
     pub members: ::prost::alloc::vec::Vec<MemberRequest>,
     /// group_metadata is any arbitrary metadata attached to the group.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub group_metadata: ::prost::alloc::string::String,
     /// group_policy_metadata is any arbitrary metadata attached to the group policy.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag="4")]
     pub group_policy_metadata: ::prost::alloc::string::String,
     /// group_policy_as_admin is a boolean field, if set to true, the group policy account address will be used as group
     /// and group policy admin.
-    #[prost(bool, tag = "5")]
+    #[prost(bool, tag="5")]
     pub group_policy_as_admin: bool,
     /// decision_policy specifies the group policy's decision policy.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag="6")]
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgCreateGroupWithPolicyResponse is the Msg/CreateGroupWithPolicy response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupWithPolicyResponse {
     /// group_id is the unique ID of the newly created group with policy.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
     /// group_policy_address is the account address of the newly created group policy.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub group_policy_address: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupPolicyAdminResponse {}
+pub struct MsgUpdateGroupPolicyAdminResponse {
+}
 /// MsgUpdateGroupPolicyDecisionPolicy is the Msg/UpdateGroupPolicyDecisionPolicy request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyDecisionPolicy {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_policy_address is the account address of group policy.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub group_policy_address: ::prost::alloc::string::String,
     /// decision_policy is the updated group policy's decision policy.
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag="3")]
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgUpdateGroupPolicyDecisionPolicyResponse is the Msg/UpdateGroupPolicyDecisionPolicy response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupPolicyDecisionPolicyResponse {}
+pub struct MsgUpdateGroupPolicyDecisionPolicyResponse {
+}
 /// MsgUpdateGroupPolicyMetadata is the Msg/UpdateGroupPolicyMetadata request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyMetadata {
     /// admin is the account address of the group admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// group_policy_address is the account address of group policy.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub group_policy_address: ::prost::alloc::string::String,
     /// metadata is the updated group policy metadata.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyMetadataResponse is the Msg/UpdateGroupPolicyMetadata response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateGroupPolicyMetadataResponse {}
+pub struct MsgUpdateGroupPolicyMetadataResponse {
+}
 /// MsgSubmitProposal is the Msg/SubmitProposal request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposal {
     /// group_policy_address is the account address of group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub group_policy_address: ::prost::alloc::string::String,
     /// proposers are the account addresses of the proposers.
     /// Proposers signatures will be counted as yes votes.
-    #[prost(string, repeated, tag = "2")]
+    #[prost(string, repeated, tag="2")]
     pub proposers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// metadata is any arbitrary metadata to attached to the proposal.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub metadata: ::prost::alloc::string::String,
     /// messages is a list of `sdk.Msg`s that will be executed if the proposal passes.
-    #[prost(message, repeated, tag = "4")]
+    #[prost(message, repeated, tag="4")]
     pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
     /// exec defines the mode of execution of the proposal,
     /// whether it should be executed immediately on creation or not.
     /// If so, proposers signatures are considered as Yes votes.
-    #[prost(enumeration = "Exec", tag = "5")]
+    #[prost(enumeration="Exec", tag="5")]
     pub exec: i32,
 }
 /// MsgSubmitProposalResponse is the Msg/SubmitProposal response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposalResponse {
     /// proposal is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// MsgWithdrawProposal is the Msg/WithdrawProposal request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawProposal {
     /// proposal is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// address is the admin of the group policy or one of the proposer of the proposal.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub address: ::prost::alloc::string::String,
 }
 /// MsgWithdrawProposalResponse is the Msg/WithdrawProposal response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawProposalResponse {}
+pub struct MsgWithdrawProposalResponse {
+}
 /// MsgVote is the Msg/Vote request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVote {
     /// proposal is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// voter is the voter account address.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub voter: ::prost::alloc::string::String,
     /// option is the voter's choice on the proposal.
-    #[prost(enumeration = "VoteOption", tag = "3")]
+    #[prost(enumeration="VoteOption", tag="3")]
     pub option: i32,
     /// metadata is any arbitrary metadata to attached to the vote.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag="4")]
     pub metadata: ::prost::alloc::string::String,
     /// exec defines whether the proposal should be executed
     /// immediately after voting or not.
-    #[prost(enumeration = "Exec", tag = "5")]
+    #[prost(enumeration="Exec", tag="5")]
     pub exec: i32,
 }
 /// MsgVoteResponse is the Msg/Vote response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgVoteResponse {}
+pub struct MsgVoteResponse {
+}
 /// MsgExec is the Msg/Exec request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExec {
     /// proposal is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// executor is the account address used to execute the proposal.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub executor: ::prost::alloc::string::String,
 }
 /// MsgExecResponse is the Msg/Exec request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExecResponse {
     /// result is the final result of the proposal execution.
-    #[prost(enumeration = "ProposalExecutorResult", tag = "2")]
+    #[prost(enumeration="ProposalExecutorResult", tag="2")]
     pub result: i32,
 }
 /// MsgLeaveGroup is the Msg/LeaveGroup request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgLeaveGroup {
     /// address is the account address of the group member.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag="2")]
     pub group_id: u64,
 }
 /// MsgLeaveGroupResponse is the Msg/LeaveGroup response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgLeaveGroupResponse {}
+pub struct MsgLeaveGroupResponse {
+}
 //
 // Proposals and Voting
 //
@@ -580,17 +634,30 @@ pub enum Exec {
     /// be executed at a later point.
     Try = 1,
 }
-#[doc = r" Generated client implementations."]
+impl Exec {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Exec::Unspecified => "EXEC_UNSPECIFIED",
+            Exec::Try => "EXEC_TRY",
+        }
+    }
+}
+/// Generated client implementations.
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Msg is the cosmos.group.v1 Msg service."]
+    use tonic::codegen::http::Uri;
+    /// Msg is the cosmos.group.v1 Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -603,264 +670,347 @@ pub mod msg_client {
     impl<T> MsgClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + Sync + 'static,
         T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> MsgClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
             T: tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
                 Response = http::Response<
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        #[doc = " CreateGroup creates a new group with an admin account address, a list of members and some optional metadata."]
+        /// CreateGroup creates a new group with an admin account address, a list of members and some optional metadata.
         pub async fn create_group(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroup>,
         ) -> Result<tonic::Response<super::MsgCreateGroupResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/CreateGroup");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/CreateGroup",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupMembers updates the group members with given group id and admin address."]
+        /// UpdateGroupMembers updates the group members with given group id and admin address.
         pub async fn update_group_members(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupMembers>,
-        ) -> Result<tonic::Response<super::MsgUpdateGroupMembersResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgUpdateGroupMembersResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/UpdateGroupMembers");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/UpdateGroupMembers",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupAdmin updates the group admin with given group id and previous admin address."]
+        /// UpdateGroupAdmin updates the group admin with given group id and previous admin address.
         pub async fn update_group_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupAdmin>,
         ) -> Result<tonic::Response<super::MsgUpdateGroupAdminResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/UpdateGroupAdmin");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/UpdateGroupAdmin",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupMetadata updates the group metadata with given group id and admin address."]
+        /// UpdateGroupMetadata updates the group metadata with given group id and admin address.
         pub async fn update_group_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupMetadata>,
-        ) -> Result<tonic::Response<super::MsgUpdateGroupMetadataResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgUpdateGroupMetadataResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/UpdateGroupMetadata");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/UpdateGroupMetadata",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " CreateGroupPolicy creates a new group policy using given DecisionPolicy."]
+        /// CreateGroupPolicy creates a new group policy using given DecisionPolicy.
         pub async fn create_group_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroupPolicy>,
-        ) -> Result<tonic::Response<super::MsgCreateGroupPolicyResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgCreateGroupPolicyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/CreateGroupPolicy");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/CreateGroupPolicy",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " CreateGroupWithPolicy creates a new group with policy."]
+        /// CreateGroupWithPolicy creates a new group with policy.
         pub async fn create_group_with_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroupWithPolicy>,
-        ) -> Result<tonic::Response<super::MsgCreateGroupWithPolicyResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgCreateGroupWithPolicyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/CreateGroupWithPolicy");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/CreateGroupWithPolicy",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupPolicyAdmin updates a group policy admin."]
+        /// UpdateGroupPolicyAdmin updates a group policy admin.
         pub async fn update_group_policy_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyAdmin>,
-        ) -> Result<tonic::Response<super::MsgUpdateGroupPolicyAdminResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgUpdateGroupPolicyAdminResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/UpdateGroupPolicyAdmin");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/UpdateGroupPolicyAdmin",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupPolicyDecisionPolicy allows a group policy's decision policy to be updated."]
+        /// UpdateGroupPolicyDecisionPolicy allows a group policy's decision policy to be updated.
         pub async fn update_group_policy_decision_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyDecisionPolicy>,
-        ) -> Result<tonic::Response<super::MsgUpdateGroupPolicyDecisionPolicyResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgUpdateGroupPolicyDecisionPolicyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.group.v1.Msg/UpdateGroupPolicyDecisionPolicy",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UpdateGroupPolicyMetadata updates a group policy metadata."]
+        /// UpdateGroupPolicyMetadata updates a group policy metadata.
         pub async fn update_group_policy_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyMetadata>,
-        ) -> Result<tonic::Response<super::MsgUpdateGroupPolicyMetadataResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::MsgUpdateGroupPolicyMetadataResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.group.v1.Msg/UpdateGroupPolicyMetadata",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " SubmitProposal submits a new proposal."]
+        /// SubmitProposal submits a new proposal.
         pub async fn submit_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSubmitProposal>,
         ) -> Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/SubmitProposal");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/SubmitProposal",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " WithdrawProposal withdraws a proposal."]
+        /// WithdrawProposal withdraws a proposal.
         pub async fn withdraw_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawProposal>,
         ) -> Result<tonic::Response<super::MsgWithdrawProposalResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/WithdrawProposal");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/WithdrawProposal",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Vote allows a voter to vote on a proposal."]
+        /// Vote allows a voter to vote on a proposal.
         pub async fn vote(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgVote>,
         ) -> Result<tonic::Response<super::MsgVoteResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/Vote");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Exec executes a proposal."]
+        /// Exec executes a proposal.
         pub async fn exec(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExec>,
         ) -> Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/Exec");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " LeaveGroup allows a group member to leave the group."]
+        /// LeaveGroup allows a group member to leave the group.
         pub async fn leave_group(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgLeaveGroup>,
         ) -> Result<tonic::Response<super::MsgLeaveGroupResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Msg/LeaveGroup");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Msg/LeaveGroup",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -869,318 +1019,319 @@ pub mod msg_client {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventCreateGroup {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
 }
 /// EventUpdateGroup is an event emitted when a group is updated.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventUpdateGroup {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
 }
 /// EventCreateGroupPolicy is an event emitted when a group policy is created.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventCreateGroupPolicy {
     /// address is the account address of the group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
 /// EventUpdateGroupPolicy is an event emitted when a group policy is updated.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventUpdateGroupPolicy {
     /// address is the account address of the group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
 /// EventSubmitProposal is an event emitted when a proposal is created.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventSubmitProposal {
     /// proposal_id is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// EventWithdrawProposal is an event emitted when a proposal is withdrawn.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventWithdrawProposal {
     /// proposal_id is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// EventVote is an event emitted when a voter votes on a proposal.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventVote {
     /// proposal_id is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// EventExec is an event emitted when a proposal is executed.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventExec {
     /// proposal_id is the unique ID of the proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// result is the proposal execution result.
-    #[prost(enumeration = "ProposalExecutorResult", tag = "2")]
+    #[prost(enumeration="ProposalExecutorResult", tag="2")]
     pub result: i32,
     /// logs contains error logs in case the execution result is FAILURE.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag="3")]
     pub logs: ::prost::alloc::string::String,
 }
 /// EventLeaveGroup is an event emitted when group member leaves the group.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventLeaveGroup {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
     /// address is the account address of the group member.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub address: ::prost::alloc::string::String,
 }
 /// QueryGroupInfoRequest is the Query/GroupInfo request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupInfoRequest {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
 }
 /// QueryGroupInfoResponse is the Query/GroupInfo response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupInfoResponse {
     /// info is the GroupInfo for the group.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub info: ::core::option::Option<GroupInfo>,
 }
 /// QueryGroupPolicyInfoRequest is the Query/GroupPolicyInfo request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPolicyInfoRequest {
     /// address is the account address of the group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
 /// QueryGroupPolicyInfoResponse is the Query/GroupPolicyInfo response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPolicyInfoResponse {
     /// info is the GroupPolicyInfo for the group policy.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub info: ::core::option::Option<GroupPolicyInfo>,
 }
 /// QueryGroupMembersRequest is the Query/GroupMembers request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupMembersRequest {
     /// group_id is the unique ID of the group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupMembersResponse is the Query/GroupMembersResponse response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupMembersResponse {
     /// members are the members of the group with given group_id.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub members: ::prost::alloc::vec::Vec<GroupMember>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupsByAdminRequest is the Query/GroupsByAdmin request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByAdminRequest {
     /// admin is the account address of a group's admin.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupsByAdminResponse is the Query/GroupsByAdminResponse response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByAdminResponse {
     /// groups are the groups info with the provided admin.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub groups: ::prost::alloc::vec::Vec<GroupInfo>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupPoliciesByGroupRequest is the Query/GroupPoliciesByGroup request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByGroupRequest {
     /// group_id is the unique ID of the group policy's group.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_id: u64,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupPoliciesByGroupResponse is the Query/GroupPoliciesByGroup response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByGroupResponse {
     /// group_policies are the group policies info associated with the provided group.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub group_policies: ::prost::alloc::vec::Vec<GroupPolicyInfo>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupPoliciesByAdminRequest is the Query/GroupPoliciesByAdmin request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByAdminRequest {
     /// admin is the admin address of the group policy.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub admin: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupPoliciesByAdminResponse is the Query/GroupPoliciesByAdmin response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByAdminResponse {
     /// group_policies are the group policies info with provided admin.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub group_policies: ::prost::alloc::vec::Vec<GroupPolicyInfo>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryProposalRequest is the Query/Proposal request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalRequest {
     /// proposal_id is the unique ID of a proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// QueryProposalResponse is the Query/Proposal response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalResponse {
     /// proposal is the proposal info.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub proposal: ::core::option::Option<Proposal>,
 }
 /// QueryProposalsByGroupPolicyRequest is the Query/ProposalByGroupPolicy request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsByGroupPolicyRequest {
     /// address is the account address of the group policy related to proposals.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryProposalsByGroupPolicyResponse is the Query/ProposalByGroupPolicy response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsByGroupPolicyResponse {
     /// proposals are the proposals with given group policy.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub proposals: ::prost::alloc::vec::Vec<Proposal>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryVoteByProposalVoterRequest is the Query/VoteByProposalVoter request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteByProposalVoterRequest {
     /// proposal_id is the unique ID of a proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// voter is a proposal voter account address.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag="2")]
     pub voter: ::prost::alloc::string::String,
 }
 /// QueryVoteByProposalVoterResponse is the Query/VoteByProposalVoter response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteByProposalVoterResponse {
     /// vote is the vote with given proposal_id and voter.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub vote: ::core::option::Option<Vote>,
 }
 /// QueryVotesByProposalRequest is the Query/VotesByProposal request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByProposalRequest {
     /// proposal_id is the unique ID of a proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryVotesByProposalResponse is the Query/VotesByProposal response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByProposalResponse {
     /// votes are the list of votes for given proposal_id.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub votes: ::prost::alloc::vec::Vec<Vote>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryVotesByVoterRequest is the Query/VotesByVoter request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByVoterRequest {
     /// voter is a proposal voter account address.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub voter: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryVotesByVoterResponse is the Query/VotesByVoter response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByVoterResponse {
     /// votes are the list of votes by given voter.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub votes: ::prost::alloc::vec::Vec<Vote>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupsByMemberRequest is the Query/GroupsByMember request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByMemberRequest {
     /// address is the group member address.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupsByMemberResponse is the Query/GroupsByMember response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByMemberResponse {
     /// groups are the groups info with the provided group member.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub groups: ::prost::alloc::vec::Vec<GroupInfo>,
     /// pagination defines the pagination in the response.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryTallyResultRequest is the Query/TallyResult request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultRequest {
     /// proposal_id is the unique id of a proposal.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub proposal_id: u64,
 }
 /// QueryTallyResultResponse is the Query/TallyResult response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultResponse {
     /// tally defines the requested tally.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub tally: ::core::option::Option<TallyResult>,
 }
-#[doc = r" Generated client implementations."]
+/// Generated client implementations.
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Query is the cosmos.group.v1 Query service."]
+    use tonic::codegen::http::Uri;
+    /// Query is the cosmos.group.v1 Query service.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -1193,12 +1344,16 @@ pub mod query_client {
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + Sync + 'static,
         T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
         pub fn with_interceptor<F>(
@@ -1207,239 +1362,314 @@ pub mod query_client {
         ) -> QueryClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
             T: tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
                 Response = http::Response<
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        #[doc = " GroupInfo queries group info based on group id."]
+        /// GroupInfo queries group info based on group id.
         pub async fn group_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupInfoRequest>,
         ) -> Result<tonic::Response<super::QueryGroupInfoResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupInfo");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupInfo",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupPolicyInfo queries group policy info based on account address of group policy."]
+        /// GroupPolicyInfo queries group policy info based on account address of group policy.
         pub async fn group_policy_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPolicyInfoRequest>,
-        ) -> Result<tonic::Response<super::QueryGroupPolicyInfoResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryGroupPolicyInfoResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupPolicyInfo");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupPolicyInfo",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupMembers queries members of a group"]
+        /// GroupMembers queries members of a group
         pub async fn group_members(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupMembersRequest>,
         ) -> Result<tonic::Response<super::QueryGroupMembersResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupMembers");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupMembers",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupsByAdmin queries groups by admin address."]
+        /// GroupsByAdmin queries groups by admin address.
         pub async fn groups_by_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupsByAdminRequest>,
         ) -> Result<tonic::Response<super::QueryGroupsByAdminResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupsByAdmin");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupsByAdmin",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupPoliciesByGroup queries group policies by group id."]
+        /// GroupPoliciesByGroup queries group policies by group id.
         pub async fn group_policies_by_group(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPoliciesByGroupRequest>,
-        ) -> Result<tonic::Response<super::QueryGroupPoliciesByGroupResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryGroupPoliciesByGroupResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupPoliciesByGroup");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupPoliciesByGroup",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupsByAdmin queries group policies by admin address."]
+        /// GroupsByAdmin queries group policies by admin address.
         pub async fn group_policies_by_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPoliciesByAdminRequest>,
-        ) -> Result<tonic::Response<super::QueryGroupPoliciesByAdminResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryGroupPoliciesByAdminResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupPoliciesByAdmin");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupPoliciesByAdmin",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Proposal queries a proposal based on proposal id."]
+        /// Proposal queries a proposal based on proposal id.
         pub async fn proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryProposalRequest>,
         ) -> Result<tonic::Response<super::QueryProposalResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/Proposal");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/Proposal",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " ProposalsByGroupPolicy queries proposals based on account address of group policy."]
+        /// ProposalsByGroupPolicy queries proposals based on account address of group policy.
         pub async fn proposals_by_group_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryProposalsByGroupPolicyRequest>,
-        ) -> Result<tonic::Response<super::QueryProposalsByGroupPolicyResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryProposalsByGroupPolicyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.group.v1.Query/ProposalsByGroupPolicy",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " VoteByProposalVoter queries a vote by proposal id and voter."]
+        /// VoteByProposalVoter queries a vote by proposal id and voter.
         pub async fn vote_by_proposal_voter(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVoteByProposalVoterRequest>,
-        ) -> Result<tonic::Response<super::QueryVoteByProposalVoterResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryVoteByProposalVoterResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/VoteByProposalVoter");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/VoteByProposalVoter",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " VotesByProposal queries a vote by proposal."]
+        /// VotesByProposal queries a vote by proposal.
         pub async fn votes_by_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVotesByProposalRequest>,
-        ) -> Result<tonic::Response<super::QueryVotesByProposalResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> Result<
+            tonic::Response<super::QueryVotesByProposalResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/VotesByProposal");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/VotesByProposal",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " VotesByVoter queries a vote by voter."]
+        /// VotesByVoter queries a vote by voter.
         pub async fn votes_by_voter(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVotesByVoterRequest>,
         ) -> Result<tonic::Response<super::QueryVotesByVoterResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/VotesByVoter");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/VotesByVoter",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " GroupsByMember queries groups by member address."]
+        /// GroupsByMember queries groups by member address.
         pub async fn groups_by_member(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupsByMemberRequest>,
         ) -> Result<tonic::Response<super::QueryGroupsByMemberResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/GroupsByMember");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/GroupsByMember",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " TallyResult returns the tally result of a proposal. If the proposal is"]
-        #[doc = " still in voting period, then this query computes the current tally state,"]
-        #[doc = " which might not be final. On the other hand, if the proposal is final,"]
-        #[doc = " then it simply returns the `final_tally_result` state stored in the"]
-        #[doc = " proposal itself."]
+        /// TallyResult returns the tally result of a proposal. If the proposal is
+        /// still in voting period, then this query computes the current tally state,
+        /// which might not be final. On the other hand, if the proposal is final,
+        /// then it simply returns the `final_tally_result` state stored in the
+        /// proposal itself.
         pub async fn tally_result(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryTallyResultRequest>,
         ) -> Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.group.v1.Query/TallyResult");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.group.v1.Query/TallyResult",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -1449,29 +1679,29 @@ pub mod query_client {
 pub struct GenesisState {
     /// group_seq is the group table orm.Sequence,
     /// it is used to get the next group ID.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag="1")]
     pub group_seq: u64,
     /// groups is the list of groups info.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag="2")]
     pub groups: ::prost::alloc::vec::Vec<GroupInfo>,
     /// group_members is the list of groups members.
-    #[prost(message, repeated, tag = "3")]
+    #[prost(message, repeated, tag="3")]
     pub group_members: ::prost::alloc::vec::Vec<GroupMember>,
     /// group_policy_seq is the group policy table orm.Sequence,
     /// it is used to generate the next group policy account address.
-    #[prost(uint64, tag = "4")]
+    #[prost(uint64, tag="4")]
     pub group_policy_seq: u64,
     /// group_policies is the list of group policies info.
-    #[prost(message, repeated, tag = "5")]
+    #[prost(message, repeated, tag="5")]
     pub group_policies: ::prost::alloc::vec::Vec<GroupPolicyInfo>,
     /// proposal_seq is the proposal table orm.Sequence,
     /// it is used to get the next proposal ID.
-    #[prost(uint64, tag = "6")]
+    #[prost(uint64, tag="6")]
     pub proposal_seq: u64,
     /// proposals is the list of proposals.
-    #[prost(message, repeated, tag = "7")]
+    #[prost(message, repeated, tag="7")]
     pub proposals: ::prost::alloc::vec::Vec<Proposal>,
     /// votes is the list of votes.
-    #[prost(message, repeated, tag = "8")]
+    #[prost(message, repeated, tag="8")]
     pub votes: ::prost::alloc::vec::Vec<Vote>,
 }

@@ -4,13 +4,13 @@ pub struct ModuleDescriptor {
     /// go_import names the package that should be imported by an app to load the
     /// module in the runtime module registry. It is required to make debugging
     /// of configuration errors easier for users.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub go_import: ::prost::alloc::string::String,
     /// use_package refers to a protobuf package that this module
     /// uses and exposes to the world. In an app, only one module should "use"
     /// or own a single protobuf package. It is assumed that the module uses
     /// all of the .proto files in a single package.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag="2")]
     pub use_package: ::prost::alloc::vec::Vec<PackageReference>,
     /// can_migrate_from defines which module versions this module can migrate
     /// state from. The framework will check that one module version is able to
@@ -19,14 +19,14 @@ pub struct ModuleDescriptor {
     /// versions. For instance if v3 declares it can migrate from v2, and v2
     /// declares it can migrate from v1, the framework knows how to migrate
     /// from v1 to v3, assuming all 3 module versions are registered at runtime.
-    #[prost(message, repeated, tag = "3")]
+    #[prost(message, repeated, tag="3")]
     pub can_migrate_from: ::prost::alloc::vec::Vec<MigrateFromInfo>,
 }
 /// PackageReference is a reference to a protobuf package used by a module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PackageReference {
     /// name is the fully-qualified name of the package.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub name: ::prost::alloc::string::String,
     /// revision is the optional revision of the package that is being used.
     /// Protobuf packages used in Cosmos should generally have a major version
@@ -61,9 +61,9 @@ pub struct PackageReference {
     /// This behavior ensures that:
     /// * pinned proto images are up-to-date
     /// * protobuf files are carefully annotated with revision comments which
-    ///   are important good client UX
+    ///    are important good client UX
     /// * protobuf files are changed in backwards and forwards compatible ways
-    #[prost(uint32, tag = "2")]
+    #[prost(uint32, tag="2")]
     pub revision: u32,
 }
 /// MigrateFromInfo is information on a module version that a newer module
@@ -72,7 +72,7 @@ pub struct PackageReference {
 pub struct MigrateFromInfo {
     /// module is the fully-qualified protobuf name of the module config object
     /// for the previous module version, ex: "cosmos.group.module.v1.Module".
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub module: ::prost::alloc::string::String,
 }
 /// Config represents the configuration for a Cosmos SDK ABCI app.
@@ -85,7 +85,7 @@ pub struct MigrateFromInfo {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
     /// modules are the module configurations for the app.
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub modules: ::prost::alloc::vec::Vec<ModuleConfig>,
 }
 /// ModuleConfig is a module configuration for an app.
@@ -101,34 +101,36 @@ pub struct ModuleConfig {
     /// and the framework knows that the v2 module should receive all the same state
     /// that the v1 module had. Note: modules should provide info on which versions
     /// they can migrate from in the ModuleDescriptor.can_migration_from field.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub name: ::prost::alloc::string::String,
     /// config is the config object for the module. Module config messages should
     /// define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub config: ::core::option::Option<::prost_types::Any>,
 }
 /// QueryConfigRequest is the Query/Config request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryConfigRequest {}
+pub struct QueryConfigRequest {
+}
 /// QueryConfigRequest is the Query/Config response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConfigResponse {
     /// config is the current app config.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag="1")]
     pub config: ::core::option::Option<Config>,
 }
-#[doc = r" Generated client implementations."]
+/// Generated client implementations.
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Query is the app module query service."]
+    use tonic::codegen::http::Uri;
+    /// Query is the app module query service.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -141,12 +143,16 @@ pub mod query_client {
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + Sync + 'static,
         T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
         pub fn with_interceptor<F>(
@@ -155,43 +161,52 @@ pub mod query_client {
         ) -> QueryClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
             T: tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
                 Response = http::Response<
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        #[doc = " Config returns the current app config."]
+        /// Config returns the current app config.
         pub async fn config(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConfigRequest>,
         ) -> Result<tonic::Response<super::QueryConfigResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.app.v1alpha1.Query/Config");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.app.v1alpha1.Query/Config",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

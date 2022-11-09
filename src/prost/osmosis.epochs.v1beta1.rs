@@ -3,24 +3,24 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EpochInfo {
     /// identifier is a unique reference to this particular timer.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub identifier: ::prost::alloc::string::String,
     /// start_time is the time at which the timer first ever ticks.
     /// If start_time is in the future, the epoch will not begin until the start
     /// time.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub start_time: ::core::option::Option<::prost_types::Timestamp>,
     /// duration is the time in between epoch ticks.
     /// In order for intended behavior to be met, duration should
     /// be greater than the chains expected block time.
     /// Duration must be non-zero.
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag="3")]
     pub duration: ::core::option::Option<::prost_types::Duration>,
     /// current_epoch is the current epoch number, or in other words,
     /// how many times has the timer 'ticked'.
     /// The first tick (current_epoch=1) is defined as
     /// the first block whose blocktime is greater than the EpochInfo start_time.
-    #[prost(int64, tag = "4")]
+    #[prost(int64, tag="4")]
     pub current_epoch: i64,
     /// current_epoch_start_time describes the start time of the current timer
     /// interval. The interval is (current_epoch_start_time,
@@ -39,51 +39,53 @@ pub struct EpochInfo {
     /// * The t=33 block will start the epoch for (25, 30]
     /// * The t=34 block will start the epoch for (30, 35]
     /// * The **t=36** block will start the epoch for (35, 40]
-    #[prost(message, optional, tag = "5")]
+    #[prost(message, optional, tag="5")]
     pub current_epoch_start_time: ::core::option::Option<::prost_types::Timestamp>,
     /// epoch_counting_started is a boolean, that indicates whether this
     /// epoch timer has began yet.
-    #[prost(bool, tag = "6")]
+    #[prost(bool, tag="6")]
     pub epoch_counting_started: bool,
     /// current_epoch_start_height is the block height at which the current epoch
     /// started. (The block height at which the timer last ticked)
-    #[prost(int64, tag = "8")]
+    #[prost(int64, tag="8")]
     pub current_epoch_start_height: i64,
 }
 /// GenesisState defines the epochs module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub epochs: ::prost::alloc::vec::Vec<EpochInfo>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryEpochsInfoRequest {}
+pub struct QueryEpochsInfoRequest {
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEpochsInfoResponse {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag="1")]
     pub epochs: ::prost::alloc::vec::Vec<EpochInfo>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryCurrentEpochRequest {
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub identifier: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryCurrentEpochResponse {
-    #[prost(int64, tag = "1")]
+    #[prost(int64, tag="1")]
     pub current_epoch: i64,
 }
-#[doc = r" Generated client implementations."]
+/// Generated client implementations.
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Query defines the gRPC querier service."]
+    use tonic::codegen::http::Uri;
+    /// Query defines the gRPC querier service.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -96,12 +98,16 @@ pub mod query_client {
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + Sync + 'static,
         T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
         pub fn with_interceptor<F>(
@@ -110,60 +116,72 @@ pub mod query_client {
         ) -> QueryClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
             T: tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
                 Response = http::Response<
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        #[doc = " EpochInfos provide running epochInfos"]
+        /// EpochInfos provide running epochInfos
         pub async fn epoch_infos(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryEpochsInfoRequest>,
         ) -> Result<tonic::Response<super::QueryEpochsInfoResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/osmosis.epochs.v1beta1.Query/EpochInfos");
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.epochs.v1beta1.Query/EpochInfos",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " CurrentEpoch provide current epoch of specified identifier"]
+        /// CurrentEpoch provide current epoch of specified identifier
         pub async fn current_epoch(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCurrentEpochRequest>,
         ) -> Result<tonic::Response<super::QueryCurrentEpochResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/osmosis.epochs.v1beta1.Query/CurrentEpoch");
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.epochs.v1beta1.Query/CurrentEpoch",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

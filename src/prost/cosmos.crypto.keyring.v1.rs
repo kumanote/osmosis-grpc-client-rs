@@ -2,13 +2,13 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Record {
     /// name represents a name of Record
-    #[prost(string, tag = "1")]
+    #[prost(string, tag="1")]
     pub name: ::prost::alloc::string::String,
     /// pub_key represents a public key in any format
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag="2")]
     pub pub_key: ::core::option::Option<::prost_types::Any>,
     /// Record contains one of the following items
-    #[prost(oneof = "record::Item", tags = "3, 4, 5, 6")]
+    #[prost(oneof="record::Item", tags="3, 4, 5, 6")]
     pub item: ::core::option::Option<record::Item>,
 }
 /// Nested message and enum types in `Record`.
@@ -17,35 +17,37 @@ pub mod record {
     /// Local item
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Local {
-        #[prost(message, optional, tag = "1")]
+        #[prost(message, optional, tag="1")]
         pub priv_key: ::core::option::Option<::prost_types::Any>,
     }
     /// Ledger item
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Ledger {
-        #[prost(message, optional, tag = "1")]
+        #[prost(message, optional, tag="1")]
         pub path: ::core::option::Option<super::super::super::hd::v1::Bip44Params>,
     }
     /// Multi item
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Multi {}
+    pub struct Multi {
+    }
     /// Offline item
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Offline {}
+    pub struct Offline {
+    }
     /// Record contains one of the following items
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Item {
         /// local stores the private key locally.
-        #[prost(message, tag = "3")]
+        #[prost(message, tag="3")]
         Local(Local),
         /// ledger stores the information about a Ledger key.
-        #[prost(message, tag = "4")]
+        #[prost(message, tag="4")]
         Ledger(Ledger),
         /// Multi does not store any other information.
-        #[prost(message, tag = "5")]
+        #[prost(message, tag="5")]
         Multi(Multi),
         /// Offline does not store any other information.
-        #[prost(message, tag = "6")]
+        #[prost(message, tag="6")]
         Offline(Offline),
     }
 }
