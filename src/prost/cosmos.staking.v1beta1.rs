@@ -410,7 +410,7 @@ pub struct MsgCancelUnbondingDelegation {
     pub delegator_address: ::prost::alloc::string::String,
     #[prost(string, tag="2")]
     pub validator_address: ::prost::alloc::string::String,
-    /// amount is always less than or equal to unbonding delegation entry balance 
+    /// amount is always less than or equal to unbonding delegation entry balance
     #[prost(message, optional, tag="3")]
     pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
     /// creation_height is the height which the unbonding took place.

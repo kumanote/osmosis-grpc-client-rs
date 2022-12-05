@@ -208,15 +208,6 @@ pub struct ModuleToDistributeCoinsResponse {
     pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ModuleDistributedCoinsRequest {
-}
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ModuleDistributedCoinsResponse {
-    /// Coins that have been distributed already
-    #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
-}
-#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GaugeByIdRequest {
     /// Gague ID being queried
     #[prost(uint64, tag="1")]
@@ -428,30 +419,6 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/osmosis.incentives.Query/ModuleToDistributeCoins",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        /// ModuleDistributedCoins returns coins that are distributed by the module so
-        /// far
-        pub async fn module_distributed_coins(
-            &mut self,
-            request: impl tonic::IntoRequest<super::ModuleDistributedCoinsRequest>,
-        ) -> Result<
-            tonic::Response<super::ModuleDistributedCoinsResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.incentives.Query/ModuleDistributedCoins",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
