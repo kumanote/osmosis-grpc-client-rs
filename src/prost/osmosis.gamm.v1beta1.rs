@@ -547,6 +547,34 @@ pub struct QueryPoolTypeResponse {
     #[prost(string, tag="1")]
     pub pool_type: ::prost::alloc::string::String,
 }
+/// =============================== CalcJoinPoolShares
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcJoinPoolSharesRequest {
+    #[prost(uint64, tag="1")]
+    pub pool_id: u64,
+    #[prost(message, repeated, tag="2")]
+    pub tokens_in: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcJoinPoolSharesResponse {
+    #[prost(string, tag="1")]
+    pub share_out_amount: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag="2")]
+    pub tokens_out: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
+/// =============================== CalcExitPoolCoinsFromShares
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcExitPoolCoinsFromSharesRequest {
+    #[prost(uint64, tag="1")]
+    pub pool_id: u64,
+    #[prost(string, tag="2")]
+    pub share_in_amount: ::prost::alloc::string::String,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcExitPoolCoinsFromSharesResponse {
+    #[prost(message, repeated, tag="1")]
+    pub tokens_out: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
 /// =============================== PoolParams
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolParamsRequest {
@@ -580,6 +608,21 @@ pub struct QueryTotalSharesResponse {
     #[prost(message, optional, tag="1")]
     pub total_shares: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
 }
+/// =============================== CalcJoinPoolNoSwapShares
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcJoinPoolNoSwapSharesRequest {
+    #[prost(uint64, tag="1")]
+    pub pool_id: u64,
+    #[prost(message, repeated, tag="2")]
+    pub tokens_in: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryCalcJoinPoolNoSwapSharesResponse {
+    #[prost(message, repeated, tag="1")]
+    pub tokens_out: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    #[prost(string, tag="2")]
+    pub shares_out: ::prost::alloc::string::String,
+}
 /// QuerySpotPriceRequest defines the gRPC request structure for a SpotPrice
 /// query.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -590,6 +633,25 @@ pub struct QuerySpotPriceRequest {
     pub base_asset_denom: ::prost::alloc::string::String,
     #[prost(string, tag="3")]
     pub quote_asset_denom: ::prost::alloc::string::String,
+}
+// =============================== PoolsWithFilter
+
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPoolsWithFilterRequest {
+    #[prost(message, repeated, tag="1")]
+    pub min_liquidity: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    #[prost(string, tag="2")]
+    pub pool_type: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="3")]
+    pub pagination: ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPoolsWithFilterResponse {
+    #[prost(message, repeated, tag="1")]
+    pub pools: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag="2")]
+    pub pagination: ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QuerySpotPriceResponse defines the gRPC response structure for a SpotPrice
 /// query.
@@ -602,6 +664,7 @@ pub struct QuerySpotPriceResponse {
 /// =============================== EstimateSwapExactAmountIn
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySwapExactAmountInRequest {
+    /// TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE
     #[prost(string, tag="1")]
     pub sender: ::prost::alloc::string::String,
     #[prost(uint64, tag="2")]
@@ -619,6 +682,7 @@ pub struct QuerySwapExactAmountInResponse {
 /// =============================== EstimateSwapExactAmountOut
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySwapExactAmountOutRequest {
+    /// TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE
     #[prost(string, tag="1")]
     pub sender: ::prost::alloc::string::String,
     #[prost(uint64, tag="2")]
@@ -767,6 +831,30 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// PoolsWithFilter allows you to query specific pools with requested
+        /// parameters
+        pub async fn pools_with_filter(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryPoolsWithFilterRequest>,
+        ) -> Result<
+            tonic::Response<super::QueryPoolsWithFilterResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Query/PoolsWithFilter",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         /// Per Pool gRPC Endpoints
         pub async fn pool(
             &mut self,
@@ -806,6 +894,76 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/osmosis.gamm.v1beta1.Query/PoolType",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// Simulates joining pool without a swap. Returns the amount of shares you'd
+        /// get and tokens needed to provide
+        pub async fn calc_join_pool_no_swap_shares(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryCalcJoinPoolNoSwapSharesRequest>,
+        ) -> Result<
+            tonic::Response<super::QueryCalcJoinPoolNoSwapSharesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Query/CalcJoinPoolNoSwapShares",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn calc_join_pool_shares(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryCalcJoinPoolSharesRequest>,
+        ) -> Result<
+            tonic::Response<super::QueryCalcJoinPoolSharesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Query/CalcJoinPoolShares",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn calc_exit_pool_coins_from_shares(
+            &mut self,
+            request: impl tonic::IntoRequest<
+                super::QueryCalcExitPoolCoinsFromSharesRequest,
+            >,
+        ) -> Result<
+            tonic::Response<super::QueryCalcExitPoolCoinsFromSharesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Query/CalcExitPoolCoinsFromShares",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }

@@ -64,19 +64,6 @@ pub struct QueryAccountRequest {
     #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
-/// QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
-///
-/// Since: cosmos-sdk 0.46
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryModuleAccountsRequest {
-}
-/// QueryParamsResponse is the response type for the Query/Params RPC method.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryParamsResponse {
-    /// params defines the parameters of the module.
-    #[prost(message, optional, tag="1")]
-    pub params: ::core::option::Option<Params>,
-}
 /// QueryAccountResponse is the response type for the Query/Account RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountResponse {
@@ -88,6 +75,19 @@ pub struct QueryAccountResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {
 }
+/// QueryParamsResponse is the response type for the Query/Params RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryParamsResponse {
+    /// params defines the parameters of the module.
+    #[prost(message, optional, tag="1")]
+    pub params: ::core::option::Option<Params>,
+}
+/// QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryModuleAccountsRequest {
+}
 /// QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
 ///
 /// Since: cosmos-sdk 0.46
@@ -95,6 +95,18 @@ pub struct QueryParamsRequest {
 pub struct QueryModuleAccountsResponse {
     #[prost(message, repeated, tag="1")]
     pub accounts: ::prost::alloc::vec::Vec<::prost_types::Any>,
+}
+/// QueryModuleAccountByNameRequest is the request type for the Query/ModuleAccountByName RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryModuleAccountByNameRequest {
+    #[prost(string, tag="1")]
+    pub name: ::prost::alloc::string::String,
+}
+/// QueryModuleAccountByNameResponse is the response type for the Query/ModuleAccountByName RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryModuleAccountByNameResponse {
+    #[prost(message, optional, tag="1")]
+    pub account: ::core::option::Option<::prost_types::Any>,
 }
 /// Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
 ///
@@ -143,12 +155,19 @@ pub struct AddressStringToBytesResponse {
     pub address_bytes: ::prost::alloc::vec::Vec<u8>,
 }
 /// QueryAccountAddressByIDRequest is the request type for AccountAddressByID rpc method
+///
+/// Since: cosmos-sdk 0.46.2
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountAddressByIdRequest {
+    /// id is the account number of the address to be queried. This field
+    /// should have been an uint64 (like all account numbers), and will be
+    /// updated to uint64 in a future version of the auth query.
     #[prost(int64, tag="1")]
     pub id: i64,
 }
 /// QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
+///
+/// Since: cosmos-sdk 0.46.2
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountAddressByIdResponse {
     #[prost(string, tag="1")]
@@ -266,7 +285,9 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        /// AccountAddressByID returns account address based on account id
+        /// AccountAddressByID returns account address based on account number.
+        ///
+        /// Since: cosmos-sdk 0.46.2
         pub async fn account_address_by_id(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAccountAddressByIdRequest>,
@@ -328,6 +349,29 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.auth.v1beta1.Query/ModuleAccounts",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// ModuleAccountByName returns the module account info by module name
+        pub async fn module_account_by_name(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryModuleAccountByNameRequest>,
+        ) -> Result<
+            tonic::Response<super::QueryModuleAccountByNameResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.auth.v1beta1.Query/ModuleAccountByName",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }

@@ -61,6 +61,11 @@ pub mod cosmos {
                 include!("prost/cosmos.base.kv.v1beta1.rs");
             }
         }
+        pub mod node {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.node.v1beta1.rs");
+            }
+        }
         pub mod query {
             pub mod v1beta1 {
                 include!("prost/cosmos.base.query.v1beta1.rs");
@@ -315,6 +320,14 @@ pub mod osmosis {
         pub mod v1beta1 {
             include!("prost/osmosis.gamm.v1beta1.rs");
         }
+        pub mod v2 {
+            include!("prost/osmosis.gamm.v2.rs");
+        }
+    }
+    pub mod ibcratelimit {
+        pub mod v1beta1 {
+            include!("prost/osmosis.ibcratelimit.v1beta1.rs");
+        }
     }
     pub mod incentives {
         include!("prost/osmosis.incentives.rs");
@@ -335,11 +348,6 @@ pub mod osmosis {
     pub mod store {
         pub mod v1beta1 {
             include!("prost/osmosis.store.v1beta1.rs");
-        }
-    }
-    pub mod streamswap {
-        pub mod v1 {
-            include!("prost/osmosis.streamswap.v1.rs");
         }
     }
     pub mod superfluid {
