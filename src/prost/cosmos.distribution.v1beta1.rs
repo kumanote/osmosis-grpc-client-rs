@@ -23,9 +23,6 @@ pub struct MsgWithdrawDelegatorReward {
 /// MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawDelegatorRewardResponse {
-    /// Since: cosmos-sdk 0.46
-    #[prost(message, repeated, tag="1")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// MsgWithdrawValidatorCommission withdraws the full commission to the validator
 /// address.
@@ -37,9 +34,6 @@ pub struct MsgWithdrawValidatorCommission {
 /// MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawValidatorCommissionResponse {
-    /// Since: cosmos-sdk 0.46
-    #[prost(message, repeated, tag="1")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// MsgFundCommunityPool allows an account to directly
 /// fund the community pool.

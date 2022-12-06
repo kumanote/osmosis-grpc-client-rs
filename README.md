@@ -9,14 +9,14 @@ This is a GRPC client package of [osmosis-labs/osmosis](https://github.com/osmos
 
 **proto files**
 
-- see [osmosis/go.mod at v13.0.0](https://github.com/osmosis-labs/osmosis/blob/v13.0.0/go.mod) for listing related
+- see [osmosis/go.mod at v13.1.0](https://github.com/osmosis-labs/osmosis/blob/v13.1.0/go.mod) for listing related
 packages versions.
-- and also [cosmos-sdk/go.mod at v0.46.6](https://github.com/cosmos/cosmos-sdk/blob/v0.46.6/go.mod)
+- and also [cosmos-sdk/go.mod at v0.45.1](https://github.com/cosmos/cosmos-sdk/blob/v0.45.1/go.mod)
 
 ---
 
-- [osmosis/proto/osmosis at v13.0.0](https://github.com/osmosis-labs/osmosis/tree/v13.0.0/proto/osmosis)
-- [cosmos-sdk/proto at v0.46.6](https://github.com/cosmos/cosmos-sdk/tree/v0.46.6/proto)
+- [osmosis/proto/osmosis at v13.1.0](https://github.com/osmosis-labs/osmosis/tree/v13.1.0/proto/osmosis)
+- [cosmos-sdk/proto at v0.45.1](https://github.com/cosmos/cosmos-sdk/tree/v0.45.1/proto)
 - [ibc-go/proto at v3.4.0](https://github.com/cosmos/ibc-go/tree/v3.4.0/proto)
 - [tendermint/proto/tendermint at v0.34.22](https://github.com/tendermint/tendermint/tree/v0.34.22/proto/tendermint)
 - [cosmos/cosmos-proto](https://github.com/cosmos/cosmos-proto/tree/main/proto/cosmos_proto)
@@ -27,7 +27,7 @@ packages versions.
 ```bash
 % find src/proto/cosmos -type f -follow -print | awk '{print "\""$0"\","}'
 % find src/proto/ibc -type f -follow -print | awk '{print "\""$0"\","}'
-% find src/proto/osmosis -type f -regex ".*\.\(proto\)" -follow -print | awk '{print "\""$0"\","}'
+% find src/proto/osmosis -type f -regex ".*\.proto" -follow -print | awk '{print "\""$0"\","}'
 ```
 
 ## Installation
@@ -43,7 +43,7 @@ packages versions.
 
 ```toml
 [dependencies]
-osmosis-grpc-client = { version = "13.0.0", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
+osmosis-grpc-client = { version = "13.1.0", git = "https://github.com/kumanote/osmosis-grpc-client-rs", branch = "main" }
 ```
 
 **rust files**

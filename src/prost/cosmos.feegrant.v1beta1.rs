@@ -8,7 +8,7 @@ pub struct MsgGrantAllowance {
     /// grantee is the address of the user being granted an allowance of another user's funds.
     #[prost(string, tag="2")]
     pub grantee: ::prost::alloc::string::String,
-    /// allowance can be any of basic, periodic, allowed fee allowance.
+    /// allowance can be any of basic and filtered fee allowance.
     #[prost(message, optional, tag="3")]
     pub allowance: ::core::option::Option<::prost_types::Any>,
 }
@@ -144,12 +144,12 @@ pub mod msg_client {
         }
     }
 }
-/// BasicAllowance implements Allowance with a one-time grant of coins
+/// BasicAllowance implements Allowance with a one-time grant of tokens
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BasicAllowance {
-    /// spend_limit specifies the maximum amount of coins that can be spent
-    /// by this allowance and will be updated as coins are spent. If it is
+    /// spend_limit specifies the maximum amount of tokens that can be spent
+    /// by this allowance and will be updated as tokens are spent. If it is
     /// empty, there is no spend limit and any amount of coins can be spent.
     #[prost(message, repeated, tag="1")]
     pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
@@ -184,7 +184,7 @@ pub struct PeriodicAllowance {
 /// AllowedMsgAllowance creates allowance only for specified message types.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllowedMsgAllowance {
-    /// allowance can be any of basic and periodic fee allowance.
+    /// allowance can be any of basic and filtered fee allowance.
     #[prost(message, optional, tag="1")]
     pub allowance: ::core::option::Option<::prost_types::Any>,
     /// allowed_messages are the messages for which the grantee has the access.
@@ -200,7 +200,7 @@ pub struct Grant {
     /// grantee is the address of the user being granted an allowance of another user's funds.
     #[prost(string, tag="2")]
     pub grantee: ::prost::alloc::string::String,
-    /// allowance can be any of basic, periodic, allowed fee allowance.
+    /// allowance can be any of basic and filtered fee allowance.
     #[prost(message, optional, tag="3")]
     pub allowance: ::core::option::Option<::prost_types::Any>,
 }
@@ -234,29 +234,6 @@ pub struct QueryAllowancesRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesResponse {
     /// allowances are allowance's granted for grantee by granter.
-    #[prost(message, repeated, tag="1")]
-    pub allowances: ::prost::alloc::vec::Vec<Grant>,
-    /// pagination defines an pagination for the response.
-    #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
-}
-/// QueryAllowancesByGranterRequest is the request type for the Query/AllowancesByGranter RPC method.
-///
-/// Since: cosmos-sdk 0.46
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryAllowancesByGranterRequest {
-    #[prost(string, tag="1")]
-    pub granter: ::prost::alloc::string::String,
-    /// pagination defines an pagination for the request.
-    #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
-}
-/// QueryAllowancesByGranterResponse is the response type for the Query/AllowancesByGranter RPC method.
-///
-/// Since: cosmos-sdk 0.46
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryAllowancesByGranterResponse {
-    /// allowances that have been issued by the granter.
     #[prost(message, repeated, tag="1")]
     pub allowances: ::prost::alloc::vec::Vec<Grant>,
     /// pagination defines an pagination for the response.
@@ -370,31 +347,6 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.feegrant.v1beta1.Query/Allowances",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        /// AllowancesByGranter returns all the grants given by an address
-        ///
-        /// Since: cosmos-sdk 0.46
-        pub async fn allowances_by_granter(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowancesByGranterRequest>,
-        ) -> Result<
-            tonic::Response<super::QueryAllowancesByGranterResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
